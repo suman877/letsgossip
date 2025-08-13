@@ -1,40 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Let’s Gossip — Choose Mode</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Let'sGossip</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body class="page-bg">
-  <div class="shell">
-    <header class="hero">
-      <h1>Let’s Gossip</h1>
-      <p class="sub">Ultra-slick live chat. Pick your vibe.</p>
-    </header>
+<body>
+<div class="container">
+  <h1>Let'sGossip</h1>
+  <p>Choose your chat mode:</p>
+  <button id="createBtn">Create Private Room</button>
+  <button id="joinBtn">Join Private Room</button>
+  <button id="publicBtn">Join Public Room</button>
+</div>
 
-    <main class="card-grid">
-      <a class="mode-card" href="public.html">
-        <div class="mode-badge">Open</div>
-        <h2>Public Chat</h2>
-        <p>Generate a room link anyone can join. Perfect for quick group drops.</p>
-        <div class="cta">Start Public Room →</div>
-      </a>
+<!-- Firebase CDN -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="firebase.js"></script>
 
-      <a class="mode-card" href="private.html">
-        <div class="mode-badge secure">Private</div>
-        <h2>Private Chat</h2>
-        <p>Unique room link + password. Best for two people or small, trusted circles.</p>
-        <div class="cta">Start Private Room →</div>
-      </a>
-    </main>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const createBtn = document.getElementById("createBtn");
+  const joinBtn = document.getElementById("joinBtn");
+  const publicBtn = document.getElementById("publicBtn");
 
-    <footer class="foot">
-      <span>Built with ❤️ for the web. Works on Android, iOS, tablets, and desktops.</span>
-    </footer>
-  </div>
+  // CREATE PRIVATE ROOM
+  createBtn.addEventListener("click", () => {
+    if(!confirm("Create a private chat room?")) return;
+    const roomId = 'room_' + Math.random().toString(36).substring(2,8);
+    let password = prompt("Set a password (max 7 chars, optional):","");
+    if(password && password.length>7){ alert("Password too long!"); return; }
+    alert(`Room created! Share link:\nprivate.html?room=${roomId}&pwd=${password}`);
+    window.location.href = `private.html?room=${roomId}&pwd=${password}`;
+  });
+
+  // JOIN PRIVATE ROOM
+  joinBtn.addEventListener("click", () => {
+    if(!confirm("Join a private chat room?")) return;
+    const roomId = prompt("Enter Room ID:");
+    if(!roomId){ alert("Room ID required!"); return; }
+    const password = prompt("Enter Room Password (if any):","");
+    window.location.href = `private.html?room=${roomId}&pwd=${password}`;
+  });
+
+  // JOIN PUBLIC ROOM
+  publicBtn.addEventListener("click", () => {
+    const roomId = prompt("Enter Public Room ID (or leave blank to join general room):","");
+    const finalRoom = roomId ? roomId : "public_general";
+    window.location.href = `public.html?room=${finalRoom}`;
+  });
+});
+</script>
 </body>
 </html>
