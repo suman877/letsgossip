@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Let’s Gossip — Private Room</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="page-bg">
+  <div class="shell chat-shell">
+    <header class="topbar">
+      <a class="back" href="index.html">← Home</a>
+      <div class="room-info">
+        <strong>Private Room</strong>
+        <span id="roomIdText"></span>
+      </div>
+      <div class="actions">
+        <button id="copyLinkBtn" class="btn ghost">Copy Link</button>
+      </div>
+    </header>
+
+    <section class="join-panel" id="joinPanel">
+      <div class="join-card">
+        <h2>Create / Join a Private Room</h2>
+        <div class="grid-2">
+          <div class="row">
+            <label>Display name</label>
+            <input id="displayName" maxlength="24" placeholder="e.g., Suman">
+          </div>
+          <div class="row">
+            <label>Password (≤ 7 chars a‑z/A‑Z/0‑9)</label>
+            <div class="row-inline">
+              <input id="password" maxlength="7" placeholder="secret7">
+              <button id="togglePw" class="btn ghost" type="button">👁️</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <label>Room ID</label>
+          <div class="row-inline">
+            <input id="roomIdInput" placeholder="auto-generated">
+            <button id="genRoomBtn" class="btn ghost">Random</button>
+          </div>
+        </div>
+        <button id="joinBtn" class="btn primary">Create / Join Room</button>
+        <p class="hint">Share the link and the password with exactly one friend.</p>
+      </div>
+    </section>
+
+    <section class="chat-panel hidden" id="chatPanel">
+      <div class="presence">
+        <div class="pill me" id="mePill">You</div>
+        <div class="pill" id="peerPill">Waiting for your partner…</div>
+      </div>
+
+      <ul class="messages" id="messages"></ul>
+
+      <div class="composer">
+        <button id="emojiBtn" class="icon-btn" aria-label="Emoji">😊</button>
+        <div id="emojiPicker" class="emoji-picker hidden" aria-hidden="true"></div>
+        <textarea id="messageInput" rows="1" placeholder="Type a message…"></textarea>
+        <button id="sendBtn" class="btn primary">Send</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+
+  <script src="firebase.js"></script>
+  <script src="private.js"></script>
+</body>
+</html>
